@@ -140,6 +140,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d7cf2a90e7f711d44bd647ceedebae0d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  healthBar_M: {fileID: 0}
   invincibilityFrameTime_M: 0.5
   maxHealth_M: 5
   maxArmor_M: 0
@@ -299,6 +300,10 @@ PrefabInstance:
     serializedVersion: 2
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 141062819527393706, guid: c0d0880e92bf6194aaae577764a1e18a, type: 3}
+      propertyPath: m_Camera
+      value: 
+      objectReference: {fileID: 519420031}
     - target: {fileID: 199752308642142820, guid: c0d0880e92bf6194aaae577764a1e18a, type: 3}
       propertyPath: m_RootOrder
       value: 1
@@ -441,6 +446,18 @@ PrefabInstance:
     serializedVersion: 2
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 761297811037976705, guid: e9f550e346a95ef4bab5cfd4e8579497, type: 3}
+      propertyPath: m_Camera
+      value: 
+      objectReference: {fileID: 519420031}
+    - target: {fileID: 4960017357812671072, guid: e9f550e346a95ef4bab5cfd4e8579497, type: 3}
+      propertyPath: maxArmor_M
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 4960017357812671072, guid: e9f550e346a95ef4bab5cfd4e8579497, type: 3}
+      propertyPath: maxHealth_M
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 6460202353713613748, guid: e9f550e346a95ef4bab5cfd4e8579497, type: 3}
       propertyPath: m_RootOrder
       value: 2

@@ -38,9 +38,7 @@ public class HookMovement : MonoBehaviour
                 transform.position = Vector3.Lerp(transform.position, destination_m, projectileSpeed_m * Time.deltaTime);
                 if (Vector3.Distance(transform.position, destination_m) < 0.1)
                 {
-                    ++hookState_m;
-                    reelStart_m = transform.position;
-                    startReelTime_m = Time.time;
+                    StartReel();
                 }
                 break;
             case HookState.REEL:
@@ -58,7 +56,7 @@ public class HookMovement : MonoBehaviour
                 }
                 else
                 {
-                    hookState_m = HookState.REEL;
+                    StartReel();
                 }
                 break;
         }
@@ -68,14 +66,29 @@ public class HookMovement : MonoBehaviour
     {
         if(collision.gameObject.tag == "Throwable" && attachedObject_m == null)
         {
-            attachedObject_m = collision.gameObject;
-            attachedObject_m.GetComponent<Swing>().SetSwingState(Swing.SwingState.PULL);
-            attachedObject_m.GetComponent<Swing>().SetHook(gameObject);
-            Physics2D.IgnoreCollision(collision, GameObject.Find("Player").GetComponent<Collider2D>());
-            Physics2D.IgnoreCollision(collision, GetComponent<Collider2D>());
-            hookState_m = HookState.ATTACHED;
-            GameObject.Find("Player").GetComponent<GrabThrow>().SetProjectile(attachedObject_m);
+            if (!collision.gameObject.GetComponent<Health>().IsArmored())
+            {
+                attachedObject_m = collision.gameObject;
+                attachedObject_m.GetComponent<Swing>().SetSwingState(Swing.SwingState.PULL);
+                attachedObject_m.GetComponent<Swing>().SetHook(gameObject);
+                Physics2D.IgnoreCollision(collision, GameObject.Find("Player").GetComponent<Collider2D>());
+                Physics2D.IgnoreCollision(collision, GetComponent<Collider2D>());
+                hookState_m = HookState.ATTACHED;
+                GameObject.Find("Player").GetComponent<GrabThrow>().SetProjectile(attachedObject_m);
+            }
+            else
+            {
+                StartReel();
+            }
+            
         }
+    }
+
+    private void StartReel()
+    {
+        hookState_m = HookState.REEL;
+        reelStart_m = transform.position;
+        startReelTime_m = Time.time;
     }
 
     /**************************************************** Set Functions *************************************************************/

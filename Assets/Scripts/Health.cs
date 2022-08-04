@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Health : MonoBehaviour
 {
+    public GameObject healthBar_M;
     public float invincibilityFrameTime_M = 0.5f;
     public int maxHealth_M = 5;
     public int maxArmor_M = 0;
@@ -63,9 +64,14 @@ public class Health : MonoBehaviour
             currentHealth_m -= damage;
         }
 
-        if(currentHealth_m <= 0)
+        if(currentHealth_m <= 0 && currentArmor_m <= 0)
         {
             Destroy(gameObject);
+        }
+
+        if (healthBar_M)
+        {
+            healthBar_M.GetComponent<HealthBar>().UpdateBars(maxHealth_M, currentHealth_m, maxArmor_M, currentArmor_m);
         }
 
         invincible_m = true;

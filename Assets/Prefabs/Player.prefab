@@ -354,3 +354,4 @@ MonoBehaviour:
   invincibilityFrameTime_M: 0.5
   maxHealth_M: 5
   maxArmor_M: 0
+  healthBar_M: {fileID: 0}
