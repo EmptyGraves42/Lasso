@@ -21,11 +21,13 @@ public class ThrowDamage : MonoBehaviour
     {
         
     }
-
-    private void OnCollisionEnter2D(Collision2D collision)
+ 
+    private void OnCollisionStay2D(Collision2D collision)
     {
         Health otherHealthCmp = collision.gameObject.GetComponent<Health>();
-        if (otherHealthCmp)
+
+        // TODO: will need a better check than player if enemise can throw
+        if (otherHealthCmp && collision.gameObject.name != "Player")
         {
             if (swingCmp_m.GetSwingState() == Swing.SwingState.THROW || swingCmp_m.GetSwingState() == Swing.SwingState.PULL)
             {
@@ -35,6 +37,18 @@ public class ThrowDamage : MonoBehaviour
             {
                 healthCmp_m.TakeDamage(otherHealthCmp.TakeDamage(swingDmg_M));
             }
+        }
+        else if(swingCmp_m.GetSwingState() == Swing.SwingState.PULL)
+        {
+            //swingCmp_m.SetSwingState(Swing.SwingState.NONE);
+        }
+    }
+   
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if(collision.gameObject.name == "Player")
+        {
+            GetComponent<Collider2D>().isTrigger = false;
         }
     }
 }

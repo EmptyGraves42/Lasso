@@ -31,7 +31,7 @@ public class ShootGrapple : MonoBehaviour
 
             hook.GetComponent<HookMovement>().SetProjectileSpeed(projectileSpeed_M);
             
-            Vector3 destination = GetMousePos() - player_m.transform.position;
+            Vector3 destination = GetMousePos() - transform.position;
             destination.z = 0;
             destination.Normalize();
             destination *= projectileDistance_M;
@@ -42,6 +42,9 @@ public class ShootGrapple : MonoBehaviour
 
             hook.GetComponent<HookMovement>().SetReelTime(reelTime_M);
         }
+
+        Vector3 mouse = GetMousePos();
+        transform.rotation = Quaternion.Euler(0, 0, Mathf.Atan2(mouse.y - transform.position.y, mouse.x - transform.position.x) * Mathf.Rad2Deg - 90);
     }
 
     public Vector3 GetMousePos()
