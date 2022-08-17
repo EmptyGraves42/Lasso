@@ -269,6 +269,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: MapManager
       objectReference: {fileID: 0}
+    - target: {fileID: 7502153912405548558, guid: a0cfc073b912ac44c9cdd7e38d31951e, type: 3}
+      propertyPath: boxSpawnerPrefab_M
+      value: 
+      objectReference: {fileID: 3461507139161937632, guid: 478aa67ef542ab3419702b83a3a15e07, type: 3}
+    - target: {fileID: 7502153912405548558, guid: a0cfc073b912ac44c9cdd7e38d31951e, type: 3}
+      propertyPath: enemySpawnerPrefab_M
+      value: 
+      objectReference: {fileID: 1118920931582003952, guid: 7e0c9cc75ee5e414dbf16914717358ef, type: 3}
     m_RemovedComponents: []
     m_AddedGameObjects: []
   m_SourcePrefab: {fileID: 100100000, guid: a0cfc073b912ac44c9cdd7e38d31951e, type: 3}

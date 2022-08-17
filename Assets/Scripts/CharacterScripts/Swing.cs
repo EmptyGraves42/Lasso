@@ -181,6 +181,11 @@ public class Swing : MonoBehaviour
         return swingState_m;
     }
 
+    public GameObject GetHook()
+    {
+        return hook_m;
+    }
+
     /**************************************************** Set Functions *************************************************************/
 
     public void SetHook(GameObject newHook)

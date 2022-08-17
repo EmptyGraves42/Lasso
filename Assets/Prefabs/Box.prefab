@@ -170,7 +170,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   healthBar_M: {fileID: 8864536575629086950}
   invincibilityFrameTime_M: 0.5
-  maxHealth_M: 5
+  maxHealth_M: 10
   maxArmor_M: 0
 --- !u!114 &4716190167340002509
 MonoBehaviour:

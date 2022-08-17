@@ -92,7 +92,7 @@ public class HookMovement : MonoBehaviour
         }
     }
 
-    private void StartReel()
+    public void StartReel()
     {
         hookState_m = HookState.REEL;
         reelStart_m = transform.position;

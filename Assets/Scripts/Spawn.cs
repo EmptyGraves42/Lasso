@@ -9,7 +9,6 @@ public class Spawn : MonoBehaviour
     public bool waitTillDestroyed_M = false;
 
     private GameObject spawnedObject_m;
-    private Transform spawningTransform_m;
     private float timer_m = 0;
 
     // Start is called before the first frame update
@@ -17,10 +16,7 @@ public class Spawn : MonoBehaviour
     {
         if(spawnObjectPrefab_M)
         {
-            spawningTransform_m = spawnObjectPrefab_M.transform;
-            spawningTransform_m.position = new Vector3(transform.position.x, 
-                                                     transform.position.y, 
-                                                     spawnObjectPrefab_M.transform.position.z);
+            timer_m = spawnTime_M;
         }
        
     }
@@ -38,8 +34,8 @@ public class Spawn : MonoBehaviour
                     timer_m = 0.0f;
 
                     
-                    spawnedObject_m = Instantiate(spawnObjectPrefab_M, transform);
-                    spawnedObject_m.transform.position = spawningTransform_m.position;
+                    spawnedObject_m = Instantiate(spawnObjectPrefab_M);
+                    spawnedObject_m.transform.position = transform.position;
                     
                 }
 

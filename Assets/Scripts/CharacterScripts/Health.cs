@@ -66,6 +66,11 @@ public class Health : MonoBehaviour
 
         if(currentHealth_m <= 0 && currentArmor_m <= 0)
         {
+            Swing swingCmp = GetComponent<Swing>();
+            if (swingCmp != null && swingCmp.GetHook() != null)
+            {
+                swingCmp.GetHook().GetComponent<HookMovement>().StartReel();
+            }
             Destroy(gameObject);
         }
 

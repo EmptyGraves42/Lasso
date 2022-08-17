@@ -12,11 +12,19 @@ public class MapManager : MonoBehaviour
     public int mapWidth_M = 10;
     public int mapHeight_M = 10;
     public int keyPoints_M = 10;
+    public float boxSpawnChance_M = 0.5f;
+    public float enemySpawnChance_M = 0.25f;
+
+    private float boxSpawnerOffset;
 
     // Start is called before the first frame update
     void Start()
     {
-        InstantiateMap(GenerateMap(new Vector2Int(0, 1), mapWidth_M, mapHeight_M, keyPoints_M));
+        boxSpawnerOffset = floorPrefab_M.transform.lossyScale.x / 3;
+
+        Map map = GenerateMap(new Vector2Int(0, 1), mapWidth_M, mapHeight_M, keyPoints_M);
+        InstantiateMap(map);
+        PupulateMap(map);
     }
 
     // Update is called once per frame
@@ -130,7 +138,57 @@ public class MapManager : MonoBehaviour
 
     public void PupulateMap(Map map)
     {
+        for (int i = 1; i < mapWidth_M - 1; ++i)
+        {
+            for (int j = 1; j < mapHeight_M - 1; ++j)
+            {
+                if (!map.GetGridNode(i, j).GetIsWall())
+                {
+                    if(Random.Range(0.0f, 1.0f) <= boxSpawnChance_M)
+                    {
+                        GameObject boxSpawner;
+                        Vector3 gridWorldPosition = GridToWorldPos(i, j);
 
+                        if (map.GetGridNode(i + 1, j).GetIsWall()) // node to right
+                        {
+                            boxSpawner = Instantiate(boxSpawnerPrefab_M);
+                            boxSpawner.transform.position = gridWorldPosition + new Vector3(boxSpawnerOffset, 0, 0);
+                        }
+
+                        if (map.GetGridNode(i - 1, j).GetIsWall()) // node to left
+                        {
+                            boxSpawner = Instantiate(boxSpawnerPrefab_M);
+                            boxSpawner.transform.position = gridWorldPosition - new Vector3(boxSpawnerOffset, 0, 0);
+                        }
+
+                        if (map.GetGridNode(i, j + 1).GetIsWall()) // node below
+                        {
+                            boxSpawner = Instantiate(boxSpawnerPrefab_M);
+                            boxSpawner.transform.position = gridWorldPosition - new Vector3(0, boxSpawnerOffset, 0);
+                        }
+
+                        if (map.GetGridNode(i, j - 1).GetIsWall()) // node above
+                        {
+                            boxSpawner = Instantiate(boxSpawnerPrefab_M);
+                            boxSpawner.transform.position = gridWorldPosition + new Vector3(0, boxSpawnerOffset, 0);
+                        }
+                    }
+
+                    if(Random.Range(0.0f, 1.0f) <= enemySpawnChance_M)
+                    {
+                        GameObject enemySpawner = Instantiate(enemySpawnerPrefab_M);
+                        enemySpawner.transform.position = GridToWorldPos(i, j);
+                    }
+                }
+            }
+        }
+    }
+
+    public Vector3 GridToWorldPos(int x, int y)
+    {
+        return new Vector3(x * floorPrefab_M.transform.lossyScale.x + transform.position.x,
+                          -(y * floorPrefab_M.transform.lossyScale.y) + transform.position.y,
+                          0.0f);
     }
 
     public void InstantiateMap(Map map)
@@ -149,10 +207,8 @@ public class MapManager : MonoBehaviour
                 {
                     node = Instantiate(floorPrefab_M);
                 }
-                
-                node.transform.position = new Vector3(i * node.transform.lossyScale.x + transform.position.x,
-                                                         -(j * node.transform.lossyScale.y) + transform.position.y,
-                                                         0.0f);
+
+                node.transform.position = GridToWorldPos(i, j);
             }
         }
     }
