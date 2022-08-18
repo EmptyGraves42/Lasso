@@ -5,10 +5,12 @@ using UnityEngine;
 public class Spawn : MonoBehaviour
 {
     public GameObject spawnObjectPrefab_M = null;
+    
     public float spawnTime_M = 0.0f;
     public bool waitTillDestroyed_M = false;
-
+    
     private GameObject spawnedObject_m;
+    private SpawnManager spawnManager_m;
     private float timer_m = 0;
 
     // Start is called before the first frame update
@@ -18,7 +20,8 @@ public class Spawn : MonoBehaviour
         {
             timer_m = spawnTime_M;
         }
-       
+
+        spawnManager_m = GameObject.Find("SpawnManager").GetComponent<SpawnManager>();
     }
 
     // Update is called once per frame
@@ -36,7 +39,6 @@ public class Spawn : MonoBehaviour
                     
                     spawnedObject_m = Instantiate(spawnObjectPrefab_M);
                     spawnedObject_m.transform.position = transform.position;
-                    
                 }
 
                 timer_m += Time.deltaTime;

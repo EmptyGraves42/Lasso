@@ -78,7 +78,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: 7482667652216324306, guid: 20b449928e45e8744b65d79ba4072f19, type: 3}
   m_Color: {r: 0.41509432, g: 0.19820271, b: 0.04464219, a: 1}
   m_FlipX: 0
@@ -169,7 +169,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   healthBar_M: {fileID: 8864536575629086950}
-  invincibilityFrameTime_M: 0.5
+  invincibilityFrameTime_M: 0
   maxHealth_M: 10
   maxArmor_M: 0
 --- !u!114 &4716190167340002509
@@ -184,7 +184,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8a9ec9c6d44f9ac4b9fd6866422f6955, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  swingDmg_M: 2
+  repeatDmgTimer: 1
+  swingDmgReduction_M: 2
 --- !u!1001 &3362162013018613338
 PrefabInstance:
   m_ObjectHideFlags: 0

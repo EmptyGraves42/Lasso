@@ -4,10 +4,14 @@ using UnityEngine;
 
 public class ThrowDamage : MonoBehaviour
 {
-    public int swingDmg_M = 2;
+    public float repeatDmgTimer = 1.0f;
+    public int swingDmgReduction_M = 2;
 
     private Health healthCmp_m;
     private Swing swingCmp_m;
+    private Dictionary<int, float> dmgTimers_m = new Dictionary<int, float>();
+    private List<int> dmgTimerKeys_m = new List<int>();
+    
 
     // Start is called before the first frame update
     void Start()
@@ -19,28 +23,44 @@ public class ThrowDamage : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
-    }
- 
-    private void OnCollisionStay2D(Collision2D collision)
-    {
-        Health otherHealthCmp = collision.gameObject.GetComponent<Health>();
-
-        // TODO: will need a better check than player if enemise can throw
-        if (otherHealthCmp && collision.gameObject.name != "Player")
+        if (dmgTimers_m.Count > 0)
         {
-            if (swingCmp_m.GetSwingState() == Swing.SwingState.THROW || swingCmp_m.GetSwingState() == Swing.SwingState.PULL)
+            foreach (int key in dmgTimerKeys_m)
             {
-                healthCmp_m.TakeDamage(otherHealthCmp.TakeDamage(healthCmp_m.GetCurrentHealth()));
-            }
-            else if (swingCmp_m.GetSwingState() != Swing.SwingState.NONE)
-            {
-                healthCmp_m.TakeDamage(otherHealthCmp.TakeDamage(swingDmg_M));
+                dmgTimers_m[key] -= Time.deltaTime;
             }
         }
-        else if(swingCmp_m.GetSwingState() == Swing.SwingState.PULL)
+    }
+ 
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        Health otherHealthCmp = collision.gameObject.GetComponent<Health>();
+        
+        if (otherHealthCmp && collision.gameObject.name != "Player" && swingCmp_m.GetSwingState() != Swing.SwingState.NONE)
         {
-            //swingCmp_m.SetSwingState(Swing.SwingState.NONE);
+            int otherID = otherHealthCmp.GetInstanceID();
+
+            if (!dmgTimers_m.ContainsKey(otherID))
+            {
+                dmgTimers_m.Add(otherID, 0.0f);
+                dmgTimerKeys_m.Add(otherID);
+            }
+
+            if (dmgTimers_m[otherID] <= 0)
+            {
+                if (swingCmp_m.GetSwingState() == Swing.SwingState.THROW)
+                {
+                    healthCmp_m.TakeDamage(otherHealthCmp.TakeDamage(healthCmp_m.GetCurrentHealth()));
+
+                    dmgTimers_m[otherID] = repeatDmgTimer;
+                }
+                else if (swingCmp_m.GetSwingState() == Swing.SwingState.REVOLVE)
+                {
+                    healthCmp_m.TakeDamage(otherHealthCmp.TakeDamage(healthCmp_m.GetMaxHealth() / swingDmgReduction_M));
+
+                    dmgTimers_m[otherID] = repeatDmgTimer;
+                }
+            }
         }
     }
    

@@ -101,4 +101,9 @@ public class Health : MonoBehaviour
     {
         return currentHealth_m;
     }
+
+    public int GetMaxHealth()
+    {
+        return maxHealth_M;
+    }
 }
