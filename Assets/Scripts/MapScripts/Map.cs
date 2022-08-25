@@ -38,4 +38,24 @@ public class Map
     {
         return height_m;
     }
+
+    public bool IsWall(int x, int y)
+    {
+        return grid_m[x, y].GetIsWall();
+    }
+
+    public bool IsWall(Vector2Int pos)
+    {
+        return grid_m[pos.x, pos.y].GetIsWall();
+    }
+
+    public bool IsValidPos(int x, int y)
+    {
+        return x >= 0 && x < width_m && y >= 0 && y < height_m;
+    }
+
+    public bool IsValidPos(Vector2Int pos)
+    {
+        return pos.x >= 0 && pos.x < width_m && pos.y >= 0 && pos.y < height_m;
+    }
 }
