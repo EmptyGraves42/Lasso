@@ -206,8 +206,8 @@ public class MapManager : MonoBehaviour
 
     public Vector2Int WorldToGridPos(Vector3 pos)
     {
-        return new Vector2Int(Mathf.Abs(Mathf.RoundToInt((pos.x - transform.position.x) / scale_m)),
-                              Mathf.Abs(Mathf.RoundToInt((transform.position.y - pos.y) / scale_m)));
+        return new Vector2Int(Mathf.RoundToInt((pos.x - transform.position.x) / scale_m),
+                              Mathf.RoundToInt((transform.position.y - pos.y) / scale_m));
     }
 
     public void InstantiateMap(Map map)

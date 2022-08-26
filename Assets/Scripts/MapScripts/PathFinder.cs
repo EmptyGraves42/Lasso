@@ -53,6 +53,7 @@ public class PathFinder : MonoBehaviour
     {
         mapManager_m = GameObject.Find("MapManager").GetComponent<MapManager>();
         map_m = mapManager_m.GetMap();
+        CreateNodeMap();
     }
 
     // Update is called once per frame
@@ -79,9 +80,13 @@ public class PathFinder : MonoBehaviour
 
         Vector2Int start = mapManager_m.WorldToGridPos(startWorldPos);
         Vector2Int goal = mapManager_m.WorldToGridPos(goalWorldPos);
-
         path = new LinkedList<Vector3>();
-        CreateNodeMap();
+        
+        if(!map_m.IsValidPos(start) || map_m.IsWall(start) || !map_m.IsValidPos(goal) || map_m.IsWall(goal))
+        {
+            return false;
+        }
+        
         ResetNodes();
         
         // Push Start Node onto Open List
@@ -112,8 +117,6 @@ public class PathFinder : MonoBehaviour
                 closedList_m.Add(cheapest);
                 nodeMap_m[cheapest.x][cheapest.y].list_M = List.CLOSED;
 
-                path.AddFirst(goalWorldPos);
-
                 // push path onto out path
                 while (cheapest.x != -1)
                 {
@@ -130,9 +133,19 @@ public class PathFinder : MonoBehaviour
                     }
                 }
 
-                path.AddFirst(startWorldPos);
-                
+                path.First.Value = startWorldPos;
+
+                if (path.Count == 1)
+                {
+                    path.AddLast(goalWorldPos);
+                }
+                else
+                {
+                    path.Last.Value = goalWorldPos;
+                }
+
                 // TODO: add rubberbanding and smoothing to path
+                RubberBanding(ref path);
 
                 return true;
             }
@@ -272,7 +285,7 @@ public class PathFinder : MonoBehaviour
         neighborPos.x = pos.x - 1;
         neighborPos.y = pos.y - 1;
 
-        if (map_m.IsValidPos(neighborPos) && !map_m.IsWall(neighborPos))
+        if (map_m.IsValidPos(neighborPos) && !map_m.IsWall(neighborPos) && neighbors[0].x != -1 && neighbors[3].x != -1)
         {
             neighbors[4] = neighborPos;
         }
@@ -281,7 +294,7 @@ public class PathFinder : MonoBehaviour
         neighborPos.x = pos.x + 1;
         neighborPos.y = pos.y - 1;
 
-        if (map_m.IsValidPos(neighborPos) && !map_m.IsWall(neighborPos))
+        if (map_m.IsValidPos(neighborPos) && !map_m.IsWall(neighborPos) && neighbors[0].x != -1 && neighbors[1].x != -1)
         {
             neighbors[5] = neighborPos;
         }
@@ -290,7 +303,7 @@ public class PathFinder : MonoBehaviour
         neighborPos.x = pos.x + 1;
         neighborPos.y = pos.y + 1;
 
-        if (map_m.IsValidPos(neighborPos) && !map_m.IsWall(neighborPos))
+        if (map_m.IsValidPos(neighborPos) && !map_m.IsWall(neighborPos) && neighbors[1].x != -1 && neighbors[2].x != -1)
         {
             neighbors[6] = neighborPos;
         }
@@ -299,7 +312,7 @@ public class PathFinder : MonoBehaviour
         neighborPos.x = pos.x - 1;
         neighborPos.y = pos.y + 1;
 
-        if (map_m.IsValidPos(neighborPos) && !map_m.IsWall(neighborPos))
+        if (map_m.IsValidPos(neighborPos) && !map_m.IsWall(neighborPos) && neighbors[2].x != -1 && neighbors[3].x != -1)
         {
             neighbors[7] = neighborPos;
         }
@@ -317,6 +330,58 @@ public class PathFinder : MonoBehaviour
         else
         {
             return start + 1.0f;
+        }
+    }
+
+    private void RubberBanding(ref LinkedList<Vector3> path)
+    {
+        if(path.Count >= 3)
+        {
+            LinkedListNode<Vector3> start = path.First;
+            LinkedListNode<Vector3> middle = start.Next;
+            LinkedListNode<Vector3> end = middle.Next;
+
+            while (end != null)
+            {
+                Vector2Int edge1 = mapManager_m.WorldToGridPos(start.Value);
+                Vector2Int edge2 = mapManager_m.WorldToGridPos(end.Value);
+
+                int xMin = Mathf.Min(edge1.x, edge2.x);
+                int xMax = Mathf.Max(edge1.x, edge2.x);
+                int yMin = Mathf.Min(edge1.y, edge2.y);
+                int yMax = Mathf.Max(edge1.y, edge2.y);
+
+                bool wallFound = false;
+
+                for (int i = yMin; i <= yMax; ++i)
+                {
+                    for (int j = xMin; j <= xMax; ++j)
+                    {
+                        if (map_m.IsWall(j, i))
+                        {
+                            wallFound = true;
+                            break;
+                        }
+                    }
+
+                    if (wallFound)
+                    {
+                        break;
+                    }
+                }
+
+                if (wallFound)
+                {
+                    start = middle;
+                }
+                else
+                {
+                    path.Remove(middle);
+                }
+
+                middle = end;
+                end = end.Next;
+            } 
         }
     }
 }
