@@ -32,34 +32,37 @@ public class HookMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        switch(hookState_m)
+        if (owner_m)
         {
-            case HookState.SHOOT:
-                transform.position = Vector3.Lerp(transform.position, destination_m, projectileSpeed_m * Time.deltaTime);
-                if (Vector3.Distance(transform.position, destination_m) < 0.1)
-                {
-                    StartReel();
-                }
-                break;
-            case HookState.REEL:
-                transform.position = Vector3.Lerp(reelStart_m, owner_m.transform.position, (Time.time - startReelTime_m) / reelTime_m);
-                if(Vector3.Distance(transform.position, owner_m.transform.position) < 0.1)
-                {
-                    owner_m.GetComponent<ShootGrapple>().SetCanShoot(true);
-                    GameObject.Destroy(gameObject);
-                }
-                break;
-            case HookState.ATTACHED:
-                Swing.SwingState swingState = attachedObject_m.GetComponent<Swing>().GetSwingState();
-                if (attachedObject_m && swingState != Swing.SwingState.NONE && swingState != Swing.SwingState.THROW)
-                {
-                    transform.position = attachedObject_m.transform.position;
-                }
-                else
-                {
-                    StartReel();
-                }
-                break;
+            switch (hookState_m)
+            {
+                case HookState.SHOOT: // shoot hook away from player toward target destination
+                    transform.position = Vector3.Lerp(transform.position, destination_m, projectileSpeed_m * Time.deltaTime);
+                    if (Vector3.Distance(transform.position, destination_m) < 0.1)
+                    {
+                        StartReel();
+                    }
+                    break;
+                case HookState.REEL: // pull hook back to player and destroy hook when done
+                    transform.position = Vector3.Lerp(reelStart_m, owner_m.transform.position, (Time.time - startReelTime_m) / reelTime_m);
+                    if (Vector3.Distance(transform.position, owner_m.transform.position) < 0.1)
+                    {
+                        owner_m.GetComponent<ShootGrapple>().SetCanShoot(true);
+                        GameObject.Destroy(gameObject);
+                    }
+                    break;
+                case HookState.ATTACHED: // follow attached object being swung
+                    Swing.SwingState swingState = attachedObject_m.GetComponent<Swing>().GetSwingState();
+                    if (attachedObject_m && swingState != Swing.SwingState.NONE && swingState != Swing.SwingState.THROW)
+                    {
+                        transform.position = attachedObject_m.transform.position;
+                    }
+                    else
+                    {
+                        StartReel();
+                    }
+                    break;
+            }
         }
     }
 
@@ -69,8 +72,9 @@ public class HookMovement : MonoBehaviour
         {
             if (collision.gameObject.tag == "Throwable")
             {
-                if (!collision.gameObject.GetComponent<Health>().IsArmored())
+                if (!collision.gameObject.GetComponent<Health>().IsArmored()) // can only grab unarmored targets
                 {
+                    // start swing sequence for object grabbed
                     Physics2D.IgnoreCollision(collision, GameObject.Find("Player").GetComponent<Collider2D>());
                     Physics2D.IgnoreCollision(collision, GetComponent<Collider2D>());
                     attachedObject_m = collision.gameObject;
@@ -82,11 +86,13 @@ public class HookMovement : MonoBehaviour
                 }
                 else
                 {
+                    // reel back hook if it hits armored target
                     StartReel();
                 }
             }
             else
             {
+                // reel back hook if it hits an unthrowable object
                 StartReel();
             }
         }

@@ -11,7 +11,8 @@ public class HealthBar : MonoBehaviour
     public CanvasGroup canvasGroup_M;
     public float healthScale_M = 0.5f;
     public float fadeTime_M = 10.0f;
-
+    public float fadeAlpha_M = 0.25f;
+ 
     private Health healthCmp_m;
     private float fadeStartTime_m;
     private bool damageTaken_m = false;
@@ -51,7 +52,7 @@ public class HealthBar : MonoBehaviour
 
         if (damageTaken_m)
         {
-            canvasGroup_M.alpha = Mathf.Lerp(1, 0.25f, (Time.time - fadeStartTime_m) / fadeTime_M);
+            canvasGroup_M.alpha = Mathf.Lerp(1, fadeAlpha_M, (Time.time - fadeStartTime_m) / fadeTime_M);
         }
     }
 

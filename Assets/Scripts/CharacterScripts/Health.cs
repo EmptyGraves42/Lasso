@@ -49,7 +49,7 @@ public class Health : MonoBehaviour
         }
         else
         {
-            returnDamage = damage - (currentHealth_m + currentArmor_m);
+            returnDamage = currentHealth_m + currentArmor_m;
         }
 
         if(currentArmor_m >= damage)

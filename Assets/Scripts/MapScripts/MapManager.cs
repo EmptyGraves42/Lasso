@@ -8,6 +8,7 @@ public class MapManager : MonoBehaviour
     public GameObject wallPrefab_M;
     public GameObject boxSpawnerPrefab_M;
     public GameObject enemySpawnerPrefab_M;
+    public GameObject startFloorPrefab_M;
 
     public int mapWidth_M = 10;
     public int mapHeight_M = 10;
@@ -27,10 +28,18 @@ public class MapManager : MonoBehaviour
         scale_m = floorPrefab_M.transform.lossyScale.x;
         boxSpawnerOffset_m = scale_m / 3;
 
-
-        map_m = GenerateMap(new Vector2Int(0, 1), mapWidth_M, mapHeight_M, keyPoints_M);
+        
+        map_m = GenerateMap(mapWidth_M, mapHeight_M, keyPoints_M);
         InstantiateMap(map_m);
+        Vector2 entraceWorldPos = InstantiateGateway(map_m, map_m.GetEntrance());
+        InstantiateGateway(map_m, map_m.GetExit());
         PupulateMap(map_m);
+
+        GameObject player = GameObject.Find("Player");
+        if(player)
+        {
+            player.transform.position = entraceWorldPos;
+        }
     }
 
     // Update is called once per frame
@@ -53,9 +62,63 @@ public class MapManager : MonoBehaviour
     return: the maplayout that the fucntion generates
 
     ****************************************************************************************************/
-    public Map GenerateMap(Vector2Int entrance, int width, int height, int keyPointsNum)
+    public Map GenerateMap(int width, int height, int keyPointsNum)
     {
-        Map map = new Map(width, height);
+        // determine wich sides of the map the entrance and exits will be located
+        int entranceSide = Random.Range(0, 4);
+        int exitSide = entranceSide;
+
+        // ensure the entrance and exit are on different sides
+        while(entranceSide == exitSide) 
+        {
+            exitSide = Random.Range(0, 4);
+        }
+
+        // determine exact location for entrance and exit
+        Vector2Int entrance = new Vector2Int();
+        Vector2Int exit = new Vector2Int();
+
+        switch(entranceSide)
+        {
+            case 0: // top side
+                entrance.x = Random.Range(1, width - 1);
+                entrance.y = 0;
+                break;
+            case 1: // bottom side
+                entrance.x = Random.Range(1, width - 1);
+                entrance.y = height - 1;
+                break;
+            case 2: // left side
+                entrance.x = 0;
+                entrance.y = Random.Range(1, height - 1);
+                break;
+            case 3: // right side
+                entrance.x = width - 1;
+                entrance.y = Random.Range(1, height - 1);
+                break;
+        }
+
+        switch (exitSide)
+        {
+            case 0: // top side
+                exit.x = Random.Range(1, width - 1);
+                exit.y = 0;
+                break;
+            case 1: // bottom side
+                exit.x = Random.Range(1, width - 1);
+                exit.y = height - 1;
+                break;
+            case 2: // left side
+                exit.x = 0;
+                exit.y = Random.Range(1, height - 1);
+                break;
+            case 3: // right side
+                exit.x = width - 1;
+                exit.y = Random.Range(1, height - 1);
+                break;
+        }
+
+        Map map = new Map(entrance, exit, width, height);
 
         Vector2Int[] keyPoints = new Vector2Int[keyPointsNum];
 
@@ -89,8 +152,30 @@ public class MapManager : MonoBehaviour
 
         CreatePath(map, entrance, keyPoints[0]);
 
+        // create exit to map
+        map.GetGridNode(exit.x, exit.y).SetIsWall(false);
+
+        if (exit.x == 0)
+        {
+            ++exit.x;
+        }
+        else if (exit.x == width - 1)
+        {
+            --exit.x;
+        }
+        else if (exit.y == 0)
+        {
+            ++exit.y;
+        }
+        else if (exit.y == height - 1)
+        {
+            --exit.y;
+        }
+
+        CreatePath(map, exit, keyPoints[keyPoints.Length - 1]);
+
         // crete paths between randomly generated points
-        for(int i = 0; i < keyPointsNum - 1; ++i)
+        for (int i = 0; i < keyPointsNum - 1; ++i)
         {
             Vector2Int startNode = keyPoints[i];
             Vector2Int endNode = keyPoints[i + 1];
@@ -188,6 +273,122 @@ public class MapManager : MonoBehaviour
                 }
             }
         }
+    }
+
+    Vector2 InstantiateGateway(Map map, Vector2Int position)
+    {
+        Vector2 gatePos = GridToWorldPos(position);
+
+        if (position.x == 0) // entrence is to the left
+        {
+            gatePos.x -= scale_m;
+
+            GameObject tile = Instantiate(startFloorPrefab_M);
+            tile.transform.position = gatePos;
+
+            // top wall
+            tile = Instantiate(wallPrefab_M);
+            tile.transform.position = new Vector3(gatePos.x, gatePos.y + scale_m, 0);
+
+            // left wall
+            tile = Instantiate(wallPrefab_M);
+            tile.transform.position = new Vector3(gatePos.x - scale_m, gatePos.y, 0);
+
+            // bottom wall
+            tile = Instantiate(wallPrefab_M);
+            tile.transform.position = new Vector3(gatePos.x, gatePos.y - scale_m, 0);
+
+            // top left wall
+            tile = Instantiate(wallPrefab_M);
+            tile.transform.position = new Vector3(gatePos.x - scale_m, gatePos.y + scale_m, 0);
+
+            // bottom left wall
+            tile = Instantiate(wallPrefab_M);
+            tile.transform.position = new Vector3(gatePos.x - scale_m, gatePos.y - scale_m, 0);
+        }
+        else if(position.x == map.GetWidth() - 1) // entrance is to the right
+        {
+            gatePos.x += scale_m;
+
+            GameObject tile = Instantiate(startFloorPrefab_M);
+            tile.transform.position = gatePos;
+
+            // top wall
+            tile = Instantiate(wallPrefab_M);
+            tile.transform.position = new Vector3(gatePos.x, gatePos.y + scale_m, 0);
+
+            // right wall
+            tile = Instantiate(wallPrefab_M);
+            tile.transform.position = new Vector3(gatePos.x + scale_m, gatePos.y, 0);
+
+            // bottom wall
+            tile = Instantiate(wallPrefab_M);
+            tile.transform.position = new Vector3(gatePos.x, gatePos.y - scale_m, 0);
+
+            // top right wall
+            tile = Instantiate(wallPrefab_M);
+            tile.transform.position = new Vector3(gatePos.x + scale_m, gatePos.y + scale_m, 0);
+
+            // bottom right wall
+            tile = Instantiate(wallPrefab_M);
+            tile.transform.position = new Vector3(gatePos.x + scale_m, gatePos.y - scale_m, 0);
+        }
+        else if(position.y == 0) // entrance is at the top
+        {
+            gatePos.y += scale_m;
+
+            GameObject tile = Instantiate(startFloorPrefab_M);
+            tile.transform.position = gatePos;
+
+            // top wall
+            tile = Instantiate(wallPrefab_M);
+            tile.transform.position = new Vector3(gatePos.x, gatePos.y + scale_m, 0);
+
+            // left wall
+            tile = Instantiate(wallPrefab_M);
+            tile.transform.position = new Vector3(gatePos.x - scale_m, gatePos.y, 0);
+
+            // right wall
+            tile = Instantiate(wallPrefab_M);
+            tile.transform.position = new Vector3(gatePos.x + scale_m, gatePos.y, 0);
+
+            // top left wall
+            tile = Instantiate(wallPrefab_M);
+            tile.transform.position = new Vector3(gatePos.x - scale_m, gatePos.y + scale_m, 0);
+
+            // top right wall
+            tile = Instantiate(wallPrefab_M);
+            tile.transform.position = new Vector3(gatePos.x + scale_m, gatePos.y + scale_m, 0);
+        }
+        else if(position.y == map.GetHeight() - 1) // entrance is at the bottom
+        {
+            gatePos.y -= scale_m;
+
+            GameObject tile = Instantiate(startFloorPrefab_M);
+            tile.transform.position = gatePos;
+
+            // bottom wall
+            tile = Instantiate(wallPrefab_M);
+            tile.transform.position = new Vector3(gatePos.x, gatePos.y - scale_m, 0);
+
+            // left wall
+            tile = Instantiate(wallPrefab_M);
+            tile.transform.position = new Vector3(gatePos.x - scale_m, gatePos.y, 0);
+
+            // right wall
+            tile = Instantiate(wallPrefab_M);
+            tile.transform.position = new Vector3(gatePos.x + scale_m, gatePos.y, 0);
+
+            // bottom left wall
+            tile = Instantiate(wallPrefab_M);
+            tile.transform.position = new Vector3(gatePos.x - scale_m, gatePos.y - scale_m, 0);
+
+            // bottom right wall
+            tile = Instantiate(wallPrefab_M);
+            tile.transform.position = new Vector3(gatePos.x + scale_m, gatePos.y - scale_m, 0);
+        }
+
+        return gatePos;
     }
 
     public Vector3 GridToWorldPos(int x, int y)

@@ -4,16 +4,20 @@ using UnityEngine;
 
 public class Map
 {
+    private Vector2Int entrance_m;
+    private Vector2Int exit_m;
     private int width_m;
     private int height_m;
 
     private MapNode[,] grid_m;
 
-    public Map(int width, int height)
+    public Map(Vector2Int entrance, Vector2Int exit, int width, int height)
     {
         width_m = width;
         height_m = height;
         grid_m = new MapNode[width, height];
+        entrance_m = entrance;
+        exit_m = exit;
 
         for(int i = 0; i < width; ++i)
         {
@@ -24,20 +28,7 @@ public class Map
         }
     }
 
-    public MapNode GetGridNode(int x, int y)
-    {
-        return grid_m[x, y];
-    }
-
-    public int GetWidth()
-    {
-        return width_m;
-    }
-
-    public int GetHeight()
-    {
-        return height_m;
-    }
+    
 
     public bool IsWall(int x, int y)
     {
@@ -57,5 +48,31 @@ public class Map
     public bool IsValidPos(Vector2Int pos)
     {
         return pos.x >= 0 && pos.x < width_m && pos.y >= 0 && pos.y < height_m;
+    }
+
+/**************************************************** Get Functions *************************************************************/
+public MapNode GetGridNode(int x, int y)
+    {
+        return grid_m[x, y];
+    }
+
+    public int GetWidth()
+    {
+        return width_m;
+    }
+
+    public int GetHeight()
+    {
+        return height_m;
+    }
+
+    public Vector2Int GetEntrance()
+    {
+        return entrance_m;
+    }
+
+    public Vector2Int GetExit()
+    {
+        return exit_m;
     }
 }

@@ -228,6 +228,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed_M: 1000
+  chaseDistane_M: 40
+  rotationSpeed_M: 0.05
 --- !u!114 &4960017357812671072
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -243,7 +245,7 @@ MonoBehaviour:
   healthBar_M: {fileID: 8097651061891082701}
   invincibilityFrameTime_M: 0
   maxHealth_M: 5
-  maxArmor_M: 0
+  maxArmor_M: 5
 --- !u!114 &734631759052131063
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -397,7 +399,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3014461620861344298, guid: 6409907aa472ab343a7f73f3c8c0c967, type: 3}
       propertyPath: m_FillAmount
-      value: 0.81
+      value: 0.85
       objectReference: {fileID: 0}
     - target: {fileID: 3699880698849639193, guid: 6409907aa472ab343a7f73f3c8c0c967, type: 3}
       propertyPath: m_SizeDelta.x
@@ -413,6 +415,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3699880698849639193, guid: 6409907aa472ab343a7f73f3c8c0c967, type: 3}
       propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4887073376541369531, guid: 6409907aa472ab343a7f73f3c8c0c967, type: 3}
+      propertyPath: m_Alpha
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6173843023984408252, guid: 6409907aa472ab343a7f73f3c8c0c967, type: 3}

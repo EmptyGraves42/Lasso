@@ -176,7 +176,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 55
+  orthographic size: 70
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -217,7 +217,6 @@ GameObject:
   m_Component:
   - component: {fileID: 797590537}
   - component: {fileID: 797590536}
-  - component: {fileID: 797590538}
   m_Layer: 0
   m_Name: Tester
   m_TagString: Untagged
@@ -237,10 +236,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f17cdaa3f0c7b84d99454b454fec716, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startMarkerPrefab_m: {fileID: 4689485807364210655, guid: b9568da9c89422e45bbedc0f3ed8c99a, type: 3}
-  gaolMarkerPrefab_m: {fileID: 2310097108369847942, guid: 1832d1c6683d5b548a18112067998436, type: 3}
-  markerPrefab_m: {fileID: 7678613403746035631, guid: 510064900e49f5e47a64bb79e37f7c3d, type: 3}
-  pathFinder_M: {fileID: 797590538}
+  startMarkerPrefab_M: {fileID: 4689485807364210655, guid: b9568da9c89422e45bbedc0f3ed8c99a, type: 3}
+  gaolMarkerPrefab_M: {fileID: 2310097108369847942, guid: 1832d1c6683d5b548a18112067998436, type: 3}
+  markerPrefab_M: {fileID: 7678613403746035631, guid: 510064900e49f5e47a64bb79e37f7c3d, type: 3}
+  camera_M: {fileID: 463143381}
 --- !u!4 &797590537
 Transform:
   m_ObjectHideFlags: 0
@@ -256,18 +255,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &797590538
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 797590535}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b3750e769d11922468f76658d4604f07, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &1173393998
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -323,6 +310,18 @@ PrefabInstance:
     - target: {fileID: 4151204597269331340, guid: a0cfc073b912ac44c9cdd7e38d31951e, type: 3}
       propertyPath: m_Name
       value: MapManager
+      objectReference: {fileID: 0}
+    - target: {fileID: 7502153912405548558, guid: a0cfc073b912ac44c9cdd7e38d31951e, type: 3}
+      propertyPath: mapWidth_M
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 7502153912405548558, guid: a0cfc073b912ac44c9cdd7e38d31951e, type: 3}
+      propertyPath: keyPoints_M
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 7502153912405548558, guid: a0cfc073b912ac44c9cdd7e38d31951e, type: 3}
+      propertyPath: mapHeight_M
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 7502153912405548558, guid: a0cfc073b912ac44c9cdd7e38d31951e, type: 3}
       propertyPath: floorPrefab_M

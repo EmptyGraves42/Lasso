@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PathFinder : MonoBehaviour
+public class PathFinder
 {
     public enum List
     {
@@ -46,20 +46,12 @@ public class PathFinder : MonoBehaviour
 
     MapManager mapManager_m;
     Map map_m;
-    
 
-    // Start is called before the first frame update
-    void Start()
+    public PathFinder(MapManager mapManager)
     {
-        mapManager_m = GameObject.Find("MapManager").GetComponent<MapManager>();
+        mapManager_m = mapManager;
         map_m = mapManager_m.GetMap();
         CreateNodeMap();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 
     void CreateNodeMap()
@@ -135,7 +127,7 @@ public class PathFinder : MonoBehaviour
 
                 path.First.Value = startWorldPos;
 
-                if (path.Count == 1)
+                if (path.Count == 1) // if start and goal have the same grid pos
                 {
                     path.AddLast(goalWorldPos);
                 }
@@ -144,7 +136,6 @@ public class PathFinder : MonoBehaviour
                     path.Last.Value = goalWorldPos;
                 }
 
-                // TODO: add rubberbanding and smoothing to path
                 RubberBanding(ref path);
 
                 return true;

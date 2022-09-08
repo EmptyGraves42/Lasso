@@ -8,6 +8,10 @@ PrefabInstance:
     serializedVersion: 2
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 90194417232543721, guid: d0acabeb092de534c9f2dbe1951586d6, type: 3}
+      propertyPath: m_SortingOrder
+      value: -1
+      objectReference: {fileID: 0}
     - target: {fileID: 4261116982954129620, guid: d0acabeb092de534c9f2dbe1951586d6, type: 3}
       propertyPath: m_Name
       value: EnempySpawner
