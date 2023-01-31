@@ -9,6 +9,7 @@ public class MapManager : MonoBehaviour
     public GameObject boxSpawnerPrefab_M;
     public GameObject enemySpawnerPrefab_M;
     public GameObject startFloorPrefab_M;
+    public GameObject endFloorPrefab_M;
 
     public int mapWidth_M = 10;
     public int mapHeight_M = 10;
@@ -18,34 +19,39 @@ public class MapManager : MonoBehaviour
 
     
 
-    private Map map_m;
+    private Map map_m = null;
     private float boxSpawnerOffset_m;
     private float scale_m;
 
     // Start is called before the first frame update
     void Start()
     {   
-        scale_m = floorPrefab_M.transform.lossyScale.x;
+        scale_m = floorPrefab_M.transform.lossyScale.y;
         boxSpawnerOffset_m = scale_m / 3;
 
-        
-        map_m = GenerateMap(mapWidth_M, mapHeight_M, keyPoints_M);
-        InstantiateMap(map_m);
-        Vector2 entraceWorldPos = InstantiateGateway(map_m, map_m.GetEntrance());
-        InstantiateGateway(map_m, map_m.GetExit());
-        PupulateMap(map_m);
 
-        GameObject player = GameObject.Find("Player");
-        if(player)
-        {
-            player.transform.position = entraceWorldPos;
-        }
+        CreateLevel();
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+       
+    }
+
+    void CreateLevel()
+    {
+        map_m = GenerateMap(mapWidth_M, mapHeight_M, keyPoints_M);
+        InstantiateMap(map_m);
+        GameObject entrance = InstantiateGateway(map_m, map_m.GetEntrance(), true);
+        InstantiateGateway(map_m, map_m.GetExit(), false);
+        PupulateMap(map_m);
+
+        GameObject player = GameObject.Find("Player");
+        if (player)
+        {
+            player.transform.position = entrance.transform.GetChild(0).transform.position;
+        }
     }
 
     /****************************************************************************************************
@@ -275,120 +281,55 @@ public class MapManager : MonoBehaviour
         }
     }
 
-    Vector2 InstantiateGateway(Map map, Vector2Int position)
+    GameObject InstantiateGateway(Map map, Vector2Int position, bool start)
     {
         Vector2 gatePos = GridToWorldPos(position);
+
+        GameObject room;
+
+        if (start)
+        {
+            room = Instantiate(startFloorPrefab_M);
+        }
+        else
+        {
+            room = Instantiate(endFloorPrefab_M);
+        }
 
         if (position.x == 0) // entrence is to the left
         {
             gatePos.x -= scale_m;
 
-            GameObject tile = Instantiate(startFloorPrefab_M);
-            tile.transform.position = gatePos;
+            room.transform.position = gatePos;
 
-            // top wall
-            tile = Instantiate(wallPrefab_M);
-            tile.transform.position = new Vector3(gatePos.x, gatePos.y + scale_m, 0);
-
-            // left wall
-            tile = Instantiate(wallPrefab_M);
-            tile.transform.position = new Vector3(gatePos.x - scale_m, gatePos.y, 0);
-
-            // bottom wall
-            tile = Instantiate(wallPrefab_M);
-            tile.transform.position = new Vector3(gatePos.x, gatePos.y - scale_m, 0);
-
-            // top left wall
-            tile = Instantiate(wallPrefab_M);
-            tile.transform.position = new Vector3(gatePos.x - scale_m, gatePos.y + scale_m, 0);
-
-            // bottom left wall
-            tile = Instantiate(wallPrefab_M);
-            tile.transform.position = new Vector3(gatePos.x - scale_m, gatePos.y - scale_m, 0);
+            room.transform.rotation = Quaternion.Euler(new Vector3(0, 0, 90));
         }
         else if(position.x == map.GetWidth() - 1) // entrance is to the right
         {
             gatePos.x += scale_m;
 
-            GameObject tile = Instantiate(startFloorPrefab_M);
-            tile.transform.position = gatePos;
+            room.transform.position = gatePos;
 
-            // top wall
-            tile = Instantiate(wallPrefab_M);
-            tile.transform.position = new Vector3(gatePos.x, gatePos.y + scale_m, 0);
-
-            // right wall
-            tile = Instantiate(wallPrefab_M);
-            tile.transform.position = new Vector3(gatePos.x + scale_m, gatePos.y, 0);
-
-            // bottom wall
-            tile = Instantiate(wallPrefab_M);
-            tile.transform.position = new Vector3(gatePos.x, gatePos.y - scale_m, 0);
-
-            // top right wall
-            tile = Instantiate(wallPrefab_M);
-            tile.transform.position = new Vector3(gatePos.x + scale_m, gatePos.y + scale_m, 0);
-
-            // bottom right wall
-            tile = Instantiate(wallPrefab_M);
-            tile.transform.position = new Vector3(gatePos.x + scale_m, gatePos.y - scale_m, 0);
+            room.transform.rotation = Quaternion.Euler(new Vector3(0, 0, -90));
         }
         else if(position.y == 0) // entrance is at the top
         {
             gatePos.y += scale_m;
 
-            GameObject tile = Instantiate(startFloorPrefab_M);
-            tile.transform.position = gatePos;
+            room.transform.position = gatePos;
 
-            // top wall
-            tile = Instantiate(wallPrefab_M);
-            tile.transform.position = new Vector3(gatePos.x, gatePos.y + scale_m, 0);
-
-            // left wall
-            tile = Instantiate(wallPrefab_M);
-            tile.transform.position = new Vector3(gatePos.x - scale_m, gatePos.y, 0);
-
-            // right wall
-            tile = Instantiate(wallPrefab_M);
-            tile.transform.position = new Vector3(gatePos.x + scale_m, gatePos.y, 0);
-
-            // top left wall
-            tile = Instantiate(wallPrefab_M);
-            tile.transform.position = new Vector3(gatePos.x - scale_m, gatePos.y + scale_m, 0);
-
-            // top right wall
-            tile = Instantiate(wallPrefab_M);
-            tile.transform.position = new Vector3(gatePos.x + scale_m, gatePos.y + scale_m, 0);
+            // default rotaion is fine
         }
         else if(position.y == map.GetHeight() - 1) // entrance is at the bottom
         {
             gatePos.y -= scale_m;
 
-            GameObject tile = Instantiate(startFloorPrefab_M);
-            tile.transform.position = gatePos;
+            room.transform.position = gatePos;
 
-            // bottom wall
-            tile = Instantiate(wallPrefab_M);
-            tile.transform.position = new Vector3(gatePos.x, gatePos.y - scale_m, 0);
-
-            // left wall
-            tile = Instantiate(wallPrefab_M);
-            tile.transform.position = new Vector3(gatePos.x - scale_m, gatePos.y, 0);
-
-            // right wall
-            tile = Instantiate(wallPrefab_M);
-            tile.transform.position = new Vector3(gatePos.x + scale_m, gatePos.y, 0);
-
-            // bottom left wall
-            tile = Instantiate(wallPrefab_M);
-            tile.transform.position = new Vector3(gatePos.x - scale_m, gatePos.y - scale_m, 0);
-
-            // bottom right wall
-            tile = Instantiate(wallPrefab_M);
-            tile.transform.position = new Vector3(gatePos.x + scale_m, gatePos.y - scale_m, 0);
+            room.transform.rotation = Quaternion.Euler(new Vector3(0, 0, 180));
         }
 
-        return gatePos;
+        return room;
     }
 
     public Vector3 GridToWorldPos(int x, int y)

@@ -245,7 +245,7 @@ MonoBehaviour:
   healthBar_M: {fileID: 8097651061891082701}
   invincibilityFrameTime_M: 0
   maxHealth_M: 5
-  maxArmor_M: 5
+  maxArmor_M: 0
 --- !u!114 &734631759052131063
 MonoBehaviour:
   m_ObjectHideFlags: 0

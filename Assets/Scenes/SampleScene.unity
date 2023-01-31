@@ -397,9 +397,29 @@ PrefabInstance:
       value: MapManager
       objectReference: {fileID: 0}
     - target: {fileID: 7502153912405548558, guid: a0cfc073b912ac44c9cdd7e38d31951e, type: 3}
+      propertyPath: mapWidth_M
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 7502153912405548558, guid: a0cfc073b912ac44c9cdd7e38d31951e, type: 3}
+      propertyPath: keyPoints_M
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 7502153912405548558, guid: a0cfc073b912ac44c9cdd7e38d31951e, type: 3}
+      propertyPath: mapHeight_M
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 7502153912405548558, guid: a0cfc073b912ac44c9cdd7e38d31951e, type: 3}
+      propertyPath: endFloorPrefab_M
+      value: 
+      objectReference: {fileID: 3436626124241426604, guid: 403dc3f2fbedc3242acd4b2a6bc7cfbb, type: 3}
+    - target: {fileID: 7502153912405548558, guid: a0cfc073b912ac44c9cdd7e38d31951e, type: 3}
       propertyPath: boxSpawnerPrefab_M
       value: 
       objectReference: {fileID: 3461507139161937632, guid: 478aa67ef542ab3419702b83a3a15e07, type: 3}
+    - target: {fileID: 7502153912405548558, guid: a0cfc073b912ac44c9cdd7e38d31951e, type: 3}
+      propertyPath: enemySpawnChance_M
+      value: 0.25
+      objectReference: {fileID: 0}
     - target: {fileID: 7502153912405548558, guid: a0cfc073b912ac44c9cdd7e38d31951e, type: 3}
       propertyPath: startFloorPrefab_M
       value: 
@@ -470,6 +490,50 @@ PrefabInstance:
     m_RemovedComponents: []
     m_AddedGameObjects: []
   m_SourcePrefab: {fileID: 100100000, guid: b8b7d4118e066c745a0229db49706f2b, type: 3}
+--- !u!1 &330414741
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 330414743}
+  - component: {fileID: 330414742}
+  m_Layer: 0
+  m_Name: MenuManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &330414742
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 330414741}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e530330279df83d41916072c18dfd722, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &330414743
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 330414741}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -1.007829, y: -0.28331876, z: -3.025738}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!224 &415026740 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 8607654964836229015, guid: 874bd113dff951a4d91f857bea45caa0, type: 3}

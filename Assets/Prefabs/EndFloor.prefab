@@ -10,6 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 6965364549004065979}
   - component: {fileID: 2723377714274785423}
+  - component: {fileID: 4328418697313943002}
+  - component: {fileID: 2127370911794376506}
   m_Layer: 0
   m_Name: Portal
   m_TagString: Untagged
@@ -74,7 +76,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: -1
   m_Sprite: {fileID: -2413806693520163455, guid: 89114e4fb20a4144789b7530375ae2d6, type: 3}
-  m_Color: {r: 0.15678178, g: 0.2264151, b: 0.21375449, a: 1}
+  m_Color: {r: 0, g: 0.9622642, b: 0.80188674, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -84,6 +86,34 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!58 &4328418697313943002
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1367091375741729627}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 0.25
+--- !u!114 &2127370911794376506
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1367091375741729627}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9f4230601a4e7564880c8207f500a0ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &3436626124241426604
 GameObject:
   m_ObjectHideFlags: 0
@@ -94,7 +124,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1075417995182785365}
   m_Layer: 0
-  m_Name: StartFloor
+  m_Name: EndFloor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

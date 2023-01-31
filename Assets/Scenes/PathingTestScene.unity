@@ -317,7 +317,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7502153912405548558, guid: a0cfc073b912ac44c9cdd7e38d31951e, type: 3}
       propertyPath: keyPoints_M
-      value: 15
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 7502153912405548558, guid: a0cfc073b912ac44c9cdd7e38d31951e, type: 3}
       propertyPath: mapHeight_M
@@ -328,9 +328,17 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 5634416928580771946, guid: 3c8b0ad808757364cacc70d577b5ab33, type: 3}
     - target: {fileID: 7502153912405548558, guid: a0cfc073b912ac44c9cdd7e38d31951e, type: 3}
+      propertyPath: endFloorPrefab_M
+      value: 
+      objectReference: {fileID: 3436626124241426604, guid: 403dc3f2fbedc3242acd4b2a6bc7cfbb, type: 3}
+    - target: {fileID: 7502153912405548558, guid: a0cfc073b912ac44c9cdd7e38d31951e, type: 3}
       propertyPath: boxSpawnerPrefab_M
       value: 
       objectReference: {fileID: 7368798255944524244, guid: c0d0880e92bf6194aaae577764a1e18a, type: 3}
+    - target: {fileID: 7502153912405548558, guid: a0cfc073b912ac44c9cdd7e38d31951e, type: 3}
+      propertyPath: startFloorPrefab_M
+      value: 
+      objectReference: {fileID: 3436626124241426604, guid: 8ed49f34318cd0447b6a9e9f70202672, type: 3}
     - target: {fileID: 7502153912405548558, guid: a0cfc073b912ac44c9cdd7e38d31951e, type: 3}
       propertyPath: enemySpawnerPrefab_M
       value: 
