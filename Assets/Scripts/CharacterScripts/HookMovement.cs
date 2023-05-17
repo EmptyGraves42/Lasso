@@ -11,6 +11,8 @@ public class HookMovement : MonoBehaviour
         ATTACHED
     }
 
+    public GameObject chainPrefab_M;
+
     private GameObject owner_m;
     private GameObject attachedObject_m;
     private Rigidbody2D rigid_m;
@@ -20,6 +22,7 @@ public class HookMovement : MonoBehaviour
     private float reelTime_m;
     private float startReelTime_m;
     private HookState hookState_m = HookState.SHOOT;
+    private bool hasChain_m = false;
 
     // Start is called before the first frame update
     void Start()
@@ -34,6 +37,14 @@ public class HookMovement : MonoBehaviour
     {
         if (owner_m)
         {
+            if(!hasChain_m && Vector3.Distance(transform.position, owner_m.transform.position) > chainPrefab_M.transform.lossyScale.y)
+            {
+                hasChain_m = true;
+                GameObject chain = Instantiate<GameObject>(chainPrefab_M);
+                chain.GetComponent<HookChainMovement>().leader_M = gameObject;
+                chain.GetComponent<HookChainMovement>().SetOwner(owner_m);
+            }
+
             switch (hookState_m)
             {
                 case HookState.SHOOT: // shoot hook away from player toward target destination
@@ -64,6 +75,11 @@ public class HookMovement : MonoBehaviour
                     break;
             }
         }
+    }
+
+    private void ChainMovement()
+    {
+        
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -130,5 +146,17 @@ public class HookMovement : MonoBehaviour
     public void SetHookState(HookState state)
     {
         hookState_m = state;
+    }
+
+    public void SetHasChain(bool hasChain)
+    {
+        hasChain_m = hasChain;
+    }
+
+    /**************************************************** Get Functions *************************************************************/
+    
+    public GameObject GetOwner()
+    {
+        return owner_m;
     }
 }
