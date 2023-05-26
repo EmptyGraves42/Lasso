@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class HookChainMovement : MonoBehaviour
 {
-    public GameObject leader_M;
-    
+    public float spawnDistance_M = 0.25f;
 
+    private GameObject leader_m;
     private GameObject follower_m;
     private GameObject owner_m;
     private bool hasFollower_m = false;
@@ -21,32 +21,33 @@ public class HookChainMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (leader_M)
+        if (leader_m)
         {
-            Vector3 dir = (owner_m.transform.position - leader_M.transform.position).normalized;
+            Vector3 dir = (owner_m.transform.position - leader_m.transform.position).normalized;
             transform.rotation = Quaternion.FromToRotation(Vector3.up, dir);
-            transform.position = leader_M.transform.position + (dir * transform.lossyScale.y);
+            transform.position = leader_m.transform.position + (dir * transform.lossyScale.y);
 
-            if (Vector3.Distance(transform.position, owner_m.transform.position) < transform.lossyScale.y * 0.25 ||
-                Vector3.Distance(transform.position, owner_m.transform.position) > Vector3.Distance(owner_m.transform.position, leader_M.transform.position))
+            // Despawning chain links
+            if (Vector3.Distance(transform.position, owner_m.transform.position) < transform.lossyScale.y * spawnDistance_M ||
+                Vector3.Distance(transform.position, owner_m.transform.position) > Vector3.Distance(owner_m.transform.position, leader_m.transform.position))
             {
-                if (leader_M.GetComponent<HookChainMovement>())
+                if (leader_m.GetComponent<HookChainMovement>())
                 {
-                    leader_M.GetComponent<HookChainMovement>().hasFollower_m = false;
+                    leader_m.GetComponent<HookChainMovement>().hasFollower_m = false;
                 }
                 else
                 {
-                    leader_M.GetComponent<HookMovement>().SetHasChain(false);
+                    leader_m.GetComponent<HookMovement>().SetHasChain(false);
                 }
 
                 GameObject.Destroy(gameObject);
             }
-
-            if (!hasFollower_m && Vector3.Distance(transform.position, owner_m.transform.position) > transform.lossyScale.y)
+            // Spawning chain links
+            else if (!hasFollower_m && Vector3.Distance(transform.position, owner_m.transform.position) > transform.lossyScale.y * spawnDistance_M)
             {
                 hasFollower_m = true;
                 GameObject chain = Instantiate<GameObject>(gameObject);
-                chain.GetComponent<HookChainMovement>().leader_M = gameObject;
+                chain.GetComponent<HookChainMovement>().leader_m = gameObject;
                 chain.GetComponent<HookChainMovement>().SetOwner(owner_m);
             }
         }
@@ -59,7 +60,7 @@ public class HookChainMovement : MonoBehaviour
     private void CreateFollower()
     {
         follower_m = Instantiate(gameObject);
-        follower_m.GetComponent<HookChainMovement>().leader_M = gameObject;
+        follower_m.GetComponent<HookChainMovement>().leader_m = gameObject;
         follower_m.GetComponent<HookChainMovement>().SetOwner(owner_m);
 
         hasFollower_m = true;
@@ -73,6 +74,11 @@ public class HookChainMovement : MonoBehaviour
     public void SetOwner(GameObject owner)
     {
         owner_m = owner;
+    }
+
+    public void SetLeader(GameObject leader)
+    {
+        leader_m = leader;
     }
 
     public void RemoveFollower()

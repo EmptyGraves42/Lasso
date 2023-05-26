@@ -37,11 +37,11 @@ public class HookMovement : MonoBehaviour
     {
         if (owner_m)
         {
-            if(!hasChain_m && Vector3.Distance(transform.position, owner_m.transform.position) > chainPrefab_M.transform.lossyScale.y)
+            if(!hasChain_m && Vector3.Distance(transform.position, owner_m.transform.position) > chainPrefab_M.transform.lossyScale.y * 0.5)
             {
                 hasChain_m = true;
                 GameObject chain = Instantiate<GameObject>(chainPrefab_M);
-                chain.GetComponent<HookChainMovement>().leader_M = gameObject;
+                chain.GetComponent<HookChainMovement>().SetLeader(gameObject);
                 chain.GetComponent<HookChainMovement>().SetOwner(owner_m);
             }
 
