@@ -149,9 +149,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e057208a0f35d2743b663500ae6823ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  revolveSpeed_M: 7000
+  RPM_M: 1000
+  revolveDistance_M: 20000
   pullSpeed_M: 20000
-  tension_M: 2000
   pullOffsetX_M: 1.5
   pullOffsetY_M: 0.5
   throwSpeed_M: 3000

@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class Swing : MonoBehaviour
 {
-    public float revolveSpeed_M = 7000.0f;
+    public float RPM_M = 1000.0f;
+    public float revolveDistance_M = 20000.0f;
     public float pullSpeed_M = 20000.0f;
-    public float tension_M = 2000.0f;
     public float pullOffsetX_M = 1.5f;
     public float pullOffsetY_M = 0.5f;
     public float throwSpeed_M = 3000.0f;
@@ -22,6 +22,8 @@ public class Swing : MonoBehaviour
         THROW
     }
     
+    private float revolveSpeed_m;
+    private float tension_m;
     private GameObject hook_m;
     private GameObject player_m;
     private Rigidbody2D rigid_m;
@@ -38,6 +40,9 @@ public class Swing : MonoBehaviour
     {
         player_m = GameObject.Find("Player");
         rigid_m = GetComponent<Rigidbody2D>();
+
+        revolveSpeed_m = 2 * 3.14f * RPM_M;
+        tension_m = (revolveSpeed_m * revolveSpeed_m) / revolveDistance_M;
     }
 
     // Update is called once per frame
@@ -142,12 +147,12 @@ public class Swing : MonoBehaviour
         Vector2 centerDirection = revolvePoint - transform.position;
         centerDirection.Normalize();
 
-        force += centerDirection * tension_M * Time.deltaTime * distance;
+        force += centerDirection * tension_m * Time.deltaTime * distance;
 
         Vector2 SwingDirection = new Vector2(centerDirection.y, -centerDirection.x);
         SwingDirection.Normalize();
 
-        force += SwingDirection * revolveSpeed_M * Time.deltaTime;
+        force += SwingDirection * revolveSpeed_m * Time.deltaTime;
 
         force += player_m.GetComponent<Movement>().force;
 
