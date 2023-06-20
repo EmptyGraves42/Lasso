@@ -96,12 +96,13 @@ GameObject:
   - component: {fileID: 5870997399028646349}
   - component: {fileID: 1936115046500222596}
   - component: {fileID: -7710620118783528982}
-  - component: {fileID: 8472610457582178108}
   - component: {fileID: -7968611939874019444}
+  - component: {fileID: 8472610457582178108}
   - component: {fileID: 3039198446245799670}
+  - component: {fileID: -8469931769127089707}
   m_Layer: 0
   m_Name: Missile
-  m_TagString: Untagged
+  m_TagString: Throwable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -186,8 +187,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b8e632e21643c934aae78b11f623ea16, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed_M: 2
-  rotationSpeed_M: 10
+  moveSpeed_M: 5
+  rotationSpeed_M: 1
 --- !u!50 &-7710620118783528982
 Rigidbody2D:
   serializedVersion: 4
@@ -201,30 +202,14 @@ Rigidbody2D:
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
   m_Mass: 1
-  m_LinearDrag: 0
+  m_LinearDrag: 7.5
   m_AngularDrag: 0.05
-  m_GravityScale: 1
+  m_GravityScale: 0
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!58 &8472610457582178108
-CircleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7625730172655298290}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  serializedVersion: 2
-  m_Radius: 3
 --- !u!61 &-7968611939874019444
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -251,6 +236,22 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 0.5}
   m_EdgeRadius: 0
+--- !u!58 &8472610457582178108
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7625730172655298290}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 3
 --- !u!114 &3039198446245799670
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -263,4 +264,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c4c4607a419a82441b5008e7a08da51a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  explosion_M: {fileID: 8946561402130243248, guid: 2a54f4b69ca04984b8c0606dd527db6b, type: 3}
   damage_M: 5
+--- !u!114 &-8469931769127089707
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7625730172655298290}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e057208a0f35d2743b663500ae6823ee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  RPM_M: 1000
+  revolveDistance_M: 20000
+  pullSpeed_M: 20000
+  pullOffsetX_M: 1.5
+  pullOffsetY_M: 0.5
+  throwSpeed_M: 3000
+  throwTime_M: 0.05

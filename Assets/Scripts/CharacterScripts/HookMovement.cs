@@ -63,10 +63,17 @@ public class HookMovement : MonoBehaviour
                     }
                     break;
                 case HookState.ATTACHED: // follow attached object being swung
-                    Swing.SwingState swingState = attachedObject_m.GetComponent<Swing>().GetSwingState();
-                    if (attachedObject_m && swingState != Swing.SwingState.NONE && swingState != Swing.SwingState.THROW)
+                    if (attachedObject_m)
                     {
-                        transform.position = attachedObject_m.transform.position;
+                        Swing.SwingState swingState = attachedObject_m.GetComponent<Swing>().GetSwingState();
+                        if (attachedObject_m && swingState != Swing.SwingState.NONE && swingState != Swing.SwingState.THROW)
+                        {
+                            transform.position = attachedObject_m.transform.position;
+                        }
+                        else
+                        {
+                            StartReel();
+                        }
                     }
                     else
                     {
@@ -77,21 +84,16 @@ public class HookMovement : MonoBehaviour
         }
     }
 
-    private void ChainMovement()
-    {
-        
-    }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (attachedObject_m == null)
+        if (attachedObject_m == null && !collision.isTrigger)
         {
             if (collision.gameObject.tag == "Throwable")
             {
-                if (!collision.gameObject.GetComponent<Health>().IsArmored()) // can only grab unarmored targets
+                if (!collision.gameObject.GetComponent<Health>() || !collision.gameObject.GetComponent<Health>().IsArmored()) // can only grab unarmored targets
                 {
                     // start swing sequence for object grabbed
-                    Physics2D.IgnoreCollision(collision, GameObject.Find("Player").GetComponent<Collider2D>());
                     Physics2D.IgnoreCollision(collision, GetComponent<Collider2D>());
                     attachedObject_m = collision.gameObject;
                     attachedObject_m.GetComponent<Swing>().SetSwingState(Swing.SwingState.PULL);

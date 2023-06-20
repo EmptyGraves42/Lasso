@@ -56,12 +56,18 @@ public class Swing : MonoBehaviour
                     break;
                 case SwingState.PULL:
                     destination_m = pull();
-
                     if (Vector3.Distance(player_m.transform.position, transform.position) <= 
                         Vector3.Distance(player_m.transform.position, destination_m))
                     {
                         ++swingState_m;
-                        GetComponent<Collider2D>().isTrigger = true;
+                        Collider2D[] colliders = GetComponents<Collider2D>();
+                        foreach (Collider2D collider in colliders)
+                        {
+                            if (!collider.isTrigger)
+                            {
+                                Physics2D.IgnoreCollision(collider, player_m.GetComponent<Collider2D>());
+                            }
+                        }
                     }
                     break;
                 case SwingState.TRANSITION:
@@ -70,7 +76,6 @@ public class Swing : MonoBehaviour
                     if (Vector3.Distance(destination_m, transform.position) < 1)
                     {
                         ++swingState_m;
-                        GetComponent<Collider2D>().isTrigger = false;
                     }
                     break;
                 case SwingState.REVOLVE:
@@ -97,7 +102,14 @@ public class Swing : MonoBehaviour
                     if (rigid_m.velocity.magnitude <= 1)
                     {
                         swingState_m = SwingState.NONE;
-                        //Physics2D.IgnoreCollision(GetComponent<Collider2D>(), player_m.GetComponent<Collider2D>(), false);
+                        Collider2D[] colliders = GetComponents<Collider2D>();
+                        foreach (Collider2D collider in colliders)
+                        {
+                            if (!collider.isTrigger)
+                            {
+                                Physics2D.IgnoreCollision(collider, player_m.GetComponent<Collider2D>(), false);
+                            }
+                        }
                     }
                     break;
             }
@@ -172,7 +184,6 @@ public class Swing : MonoBehaviour
         direction_m[0].Normalize();
         rigid_m.AddForce(-direction_m[3] * throwSpeed_M);
         hook_m.GetComponent<HookMovement>().SetHookState(HookMovement.HookState.REEL);
-        Physics2D.IgnoreCollision(GetComponent<Collider2D>(), player_m.GetComponent<Collider2D>(), false);
     }
 
     /**************************************************** Get Functions *************************************************************/

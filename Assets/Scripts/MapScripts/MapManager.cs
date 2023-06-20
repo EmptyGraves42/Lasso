@@ -8,6 +8,7 @@ public class MapManager : MonoBehaviour
     public GameObject wallPrefab_M;
     public GameObject boxSpawnerPrefab_M;
     public GameObject enemySpawnerPrefab_M;
+    public GameObject missileTurretPrefab_M;
     public GameObject startFloorPrefab_M;
     public GameObject endFloorPrefab_M;
 
@@ -15,7 +16,9 @@ public class MapManager : MonoBehaviour
     public int mapHeight_M = 10;
     public int keyPoints_M = 10;
     public float boxSpawnChance_M = 0.5f;
-    public float enemySpawnChance_M = 0.25f;
+    public float hazzardSpawnChance_M = 0.25f;
+    public float enemySpawnChance_M = 0.75f;
+    public float missileTurretSpawnChance_M = 0.25f;
 
     
 
@@ -200,8 +203,7 @@ public class MapManager : MonoBehaviour
         while (start != end)
         {
             // remove wall
-            MapNode node = map.GetGridNode(start.x, start.y);
-            node.SetIsWall(false);
+            map.GetGridNode(start.x, start.y).SetIsWall(false);
 
             // find next node along path
 
@@ -231,6 +233,9 @@ public class MapManager : MonoBehaviour
                 }
             }
         }
+
+        // remove wall at end
+        map.GetGridNode(end.x, end.y).SetIsWall(false);
     }
 
     public void PupulateMap(Map map)
@@ -271,10 +276,18 @@ public class MapManager : MonoBehaviour
                         }
                     }
 
-                    if(Random.Range(0.0f, 1.0f) <= enemySpawnChance_M)
+                    if(Random.Range(0.0f, 1.0f) <= hazzardSpawnChance_M)
                     {
-                        GameObject enemySpawner = Instantiate(enemySpawnerPrefab_M);
-                        enemySpawner.transform.position = GridToWorldPos(i, j);
+                        if (Random.Range(0.0f, 1.0f) <= enemySpawnChance_M)
+                        {
+                            GameObject enemySpawner = Instantiate(enemySpawnerPrefab_M);
+                            enemySpawner.transform.position = GridToWorldPos(i, j);
+                        }
+                        else
+                        {
+                            GameObject missileTurret = Instantiate(missileTurretPrefab_M);
+                            missileTurret.transform.position = GridToWorldPos(i, j);
+                        }
                     }
                 }
             }

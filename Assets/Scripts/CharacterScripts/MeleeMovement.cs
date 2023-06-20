@@ -5,7 +5,7 @@ using UnityEngine;
 public class MeleeMovement : MonoBehaviour
 {
     public float moveSpeed_M = 100.0f;
-    public float chaseDistane_M;
+    public float chaseDistance_M;
     public float rotationSpeed_M;
 
     private GameObject player_m;
@@ -34,10 +34,10 @@ public class MeleeMovement : MonoBehaviour
                 return;
             }
 
-            if (Vector3.Distance(player_m.transform.position, transform.position) <= chaseDistane_M) // distance check
+            if (Vector3.Distance(player_m.transform.position, transform.position) <= chaseDistance_M) // distance check
             {
                 // line of sight check
-                RaycastHit2D castResult = Physics2D.Raycast(transform.position, player_m.transform.position - transform.position, chaseDistane_M, 1 << LayerMask.NameToLayer("Enemy Sight"));
+                RaycastHit2D castResult = Physics2D.Raycast(transform.position, player_m.transform.position - transform.position, chaseDistance_M, 1 << LayerMask.NameToLayer("Enemy Sight"));
                 if(castResult.collider != null)
                 {
                     if (castResult.collider.gameObject == player_m)

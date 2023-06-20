@@ -123,6 +123,65 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1001 &60757418
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 2
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 3414151731600512047, guid: b8b7d4118e066c745a0229db49706f2b, type: 3}
+      propertyPath: m_RootOrder
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3414151731600512047, guid: b8b7d4118e066c745a0229db49706f2b, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3414151731600512047, guid: b8b7d4118e066c745a0229db49706f2b, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3414151731600512047, guid: b8b7d4118e066c745a0229db49706f2b, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3414151731600512047, guid: b8b7d4118e066c745a0229db49706f2b, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3414151731600512047, guid: b8b7d4118e066c745a0229db49706f2b, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3414151731600512047, guid: b8b7d4118e066c745a0229db49706f2b, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3414151731600512047, guid: b8b7d4118e066c745a0229db49706f2b, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3414151731600512047, guid: b8b7d4118e066c745a0229db49706f2b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3414151731600512047, guid: b8b7d4118e066c745a0229db49706f2b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3414151731600512047, guid: b8b7d4118e066c745a0229db49706f2b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6102280931812407039, guid: b8b7d4118e066c745a0229db49706f2b, type: 3}
+      propertyPath: m_Name
+      value: SpawnManager
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_AddedGameObjects: []
+  m_SourcePrefab: {fileID: 100100000, guid: b8b7d4118e066c745a0229db49706f2b, type: 3}
 --- !u!1 &463143379
 GameObject:
   m_ObjectHideFlags: 0
@@ -313,15 +372,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7502153912405548558, guid: a0cfc073b912ac44c9cdd7e38d31951e, type: 3}
       propertyPath: mapWidth_M
-      value: 20
+      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 7502153912405548558, guid: a0cfc073b912ac44c9cdd7e38d31951e, type: 3}
       propertyPath: keyPoints_M
-      value: 20
+      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 7502153912405548558, guid: a0cfc073b912ac44c9cdd7e38d31951e, type: 3}
       propertyPath: mapHeight_M
-      value: 20
+      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 7502153912405548558, guid: a0cfc073b912ac44c9cdd7e38d31951e, type: 3}
       propertyPath: floorPrefab_M
@@ -336,13 +395,25 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 7368798255944524244, guid: c0d0880e92bf6194aaae577764a1e18a, type: 3}
     - target: {fileID: 7502153912405548558, guid: a0cfc073b912ac44c9cdd7e38d31951e, type: 3}
+      propertyPath: enemySpawnChance_M
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7502153912405548558, guid: a0cfc073b912ac44c9cdd7e38d31951e, type: 3}
       propertyPath: startFloorPrefab_M
       value: 
       objectReference: {fileID: 3436626124241426604, guid: 8ed49f34318cd0447b6a9e9f70202672, type: 3}
     - target: {fileID: 7502153912405548558, guid: a0cfc073b912ac44c9cdd7e38d31951e, type: 3}
       propertyPath: enemySpawnerPrefab_M
       value: 
-      objectReference: {fileID: 7694857772728769562, guid: e9f550e346a95ef4bab5cfd4e8579497, type: 3}
+      objectReference: {fileID: 1118920931582003952, guid: 7e0c9cc75ee5e414dbf16914717358ef, type: 3}
+    - target: {fileID: 7502153912405548558, guid: a0cfc073b912ac44c9cdd7e38d31951e, type: 3}
+      propertyPath: missileTurretPrefab_M
+      value: 
+      objectReference: {fileID: 7049164580310429113, guid: 86685a4aae5542e4b9b4b5f6654af915, type: 3}
+    - target: {fileID: 7502153912405548558, guid: a0cfc073b912ac44c9cdd7e38d31951e, type: 3}
+      propertyPath: missileTurretSpawnChance_M
+      value: 0.5
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_AddedGameObjects: []
   m_SourcePrefab: {fileID: 100100000, guid: a0cfc073b912ac44c9cdd7e38d31951e, type: 3}

@@ -20,7 +20,6 @@ public class GrabThrow : MonoBehaviour
             if(projectile_m && projectile_m.GetComponent<Swing>().GetSwingState() == Swing.SwingState.REVOLVE)
             {
                 projectile_m.GetComponent<Swing>().SetSwingState(Swing.SwingState.WINDUP);
-                projectile_m.GetComponent<Collider2D>().isTrigger = true;
 
                 Vector3 direction = transform.position - GetMousePos();
                 direction.z = 0;
